@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OS Quiz Master – Latihan Soal Sistem Operasi</title>
+  <meta name="description" content="Platform belajar interaktif seperti Quizizz untuk materi Teori Sistem Operasi. Latihan soal pilihan ganda dan essay per modul." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===== SPLASH / LOADING ===== -->
+  <div id="splash" class="splash">
+    <div class="splash-content">
+      <div class="splash-icon">🖥️</div>
+      <h1 class="splash-title">OS Quiz Master</h1>
+      <div class="splash-bar"><div class="splash-fill"></div></div>
+    </div>
+  </div>
 
+  <!-- ===== APP WRAPPER ===== -->
+  <div id="app" class="app hidden">
+
+    <!-- ===== HOME SCREEN ===== -->
+    <section id="screen-home" class="screen active">
+      <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <div class="hero-badge">🎓 Sistem Operasi</div>
+          <h1 class="hero-title">OS Quiz <span class="gradient-text">Master</span></h1>
+          <p class="hero-sub">Platform latihan soal interaktif · 7 Modul · 140 Soal</p>
+          <div class="hero-stats">
+            <div class="stat"><span class="stat-num">7</span><span class="stat-lbl">Modul</span></div>
+            <div class="stat"><span class="stat-num">105</span><span class="stat-lbl">Pilihan Ganda</span></div>
+            <div class="stat"><span class="stat-num">35</span><span class="stat-lbl">Essay</span></div>
+          </div>
+        </div>
+      </header>
+
+      <div class="home-body">
+        <div class="section-label">Pilih Modul untuk Berlatih</div>
+        <div id="module-grid" class="module-grid"></div>
+      </div>
+
+      <div id="score-board" class="score-board hidden">
+        <h3 class="sb-title">📊 Riwayat Skor</h3>
+        <div id="sb-list" class="sb-list"></div>
+        <button class="btn-ghost" id="clear-scores">Hapus Riwayat</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE DETAIL / SETUP ===== -->
+    <section id="screen-setup" class="screen">
+      <div class="setup-wrap">
+        <button class="btn-back" id="back-home">← Kembali</button>
+        <div id="setup-module-badge" class="setup-badge"></div>
+        <h2 id="setup-title" class="setup-title"></h2>
+        <p class="setup-sub">Pilih mode latihan yang kamu inginkan</p>
+
+        <div class="mode-grid">
+          <button class="mode-card" data-mode="mc" id="mode-mc">
+            <span class="mode-icon">📝</span>
+            <span class="mode-label">Pilihan Ganda</span>
+            <span class="mode-desc">15 soal · Timer 30 detik</span>
+          </button>
+          <button class="mode-card" data-mode="essay" id="mode-essay">
+            <span class="mode-icon">✍️</span>
+            <span class="mode-label">Essay</span>
+            <span class="mode-desc">5 soal · Tanpa timer</span>
+          </button>
+          <button class="mode-card featured" data-mode="all" id="mode-all">
+            <span class="mode-icon">🚀</span>
+            <span class="mode-label">Semua Soal</span>
+            <span class="mode-desc">20 soal · Lengkap</span>
+          </button>
+        </div>
+
+        <div class="difficulty-wrap">
+          <span class="diff-label">⏱ Waktu per soal (Pilihan Ganda):</span>
+          <div class="diff-btns">
+            <button class="diff-btn active" data-sec="30">30 det</button>
+            <button class="diff-btn" data-sec="20">20 det</button>
+            <button class="diff-btn" data-sec="15">15 det</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== QUIZ SCREEN – MULTIPLE CHOICE ===== -->
+    <section id="screen-mc" class="screen">
+      <div class="quiz-header">
+        <button class="btn-quit" id="quit-mc">✕ Keluar</button>
+        <div class="quiz-prog-wrap">
+          <div class="quiz-prog-bar"><div id="mc-prog" class="quiz-prog-fill"></div></div>
+          <span id="mc-qnum" class="quiz-qnum">1 / 15</span>
+        </div>
+        <div id="mc-timer" class="timer">30</div>
+      </div>
+
+      <div class="quiz-body">
+        <div class="q-streak" id="mc-streak"></div>
+        <div class="q-card" id="mc-card">
+          <div class="q-index" id="mc-qi">Soal 1</div>
+          <p class="q-text" id="mc-q"></p>
+        </div>
+        <div class="options-grid" id="mc-opts"></div>
+
+        <div class="q-feedback hidden" id="mc-feedback">
+          <div class="fb-icon" id="fb-icon"></div>
+          <div class="fb-text">
+            <div class="fb-verdict" id="fb-verdict"></div>
+            <div class="fb-exp" id="fb-exp"></div>
+          </div>
+        </div>
+
+        <button class="btn-next hidden" id="mc-next">Soal Berikutnya →</button>
+      </div>
+    </section>
+
+    <!-- ===== QUIZ SCREEN – ESSAY ===== -->
+    <section id="screen-essay" class="screen">
+      <div class="quiz-header">
+        <button class="btn-quit" id="quit-essay">✕ Keluar</button>
+        <div class="quiz-prog-wrap">
+          <div class="quiz-prog-bar"><div id="essay-prog" class="quiz-prog-fill"></div></div>
+          <span id="essay-qnum" class="quiz-qnum">1 / 5</span>
+        </div>
+        <div class="essay-badge">Essay</div>
+      </div>
+
+      <div class="quiz-body essay-body">
+        <div class="q-card">
+          <div class="q-index" id="essay-qi">Essay 1</div>
+          <p class="q-text" id="essay-q"></p>
+        </div>
+
+        <textarea id="essay-ans" class="essay-textarea" placeholder="Tulis jawabanmu di sini...&#10;Gunakan bahasa yang jelas dan sistematis."></textarea>
+
+        <div class="essay-actions">
+          <button class="btn-reveal" id="essay-reveal">👁 Lihat Kunci Jawaban</button>
+        </div>
+
+        <div class="model-ans hidden" id="model-ans">
+          <div class="model-ans-header">
+            <span>📋 Kunci Jawaban / Model Jawaban</span>
+          </div>
+          <div class="model-ans-body" id="model-ans-body"></div>
+          <div class="self-grade">
+            <p class="sg-label">Nilai dirimu sendiri:</p>
+            <div class="sg-btns">
+              <button class="sg-btn correct" id="sg-correct">✅ Paham</button>
+              <button class="sg-btn partial" id="sg-partial">🤔 Sebagian</button>
+              <button class="sg-btn wrong" id="sg-wrong">❌ Belum Paham</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-next hidden" id="essay-next">Soal Berikutnya →</button>
+      </div>
+    </section>
+
+    <!-- ===== RESULTS SCREEN ===== -->
+    <section id="screen-results" class="screen">
+      <div class="results-wrap">
+        <div class="results-confetti" id="results-confetti"></div>
+
+        <div class="results-header">
+          <div class="results-emoji" id="results-emoji">🏆</div>
+          <h2 class="results-title">Quiz Selesai!</h2>
+          <div class="results-module" id="results-module"></div>
+        </div>
+
+        <div class="score-circle-wrap">
+          <div class="score-circle" id="score-circle">
+            <svg viewBox="0 0 120 120" class="score-svg">
+              <circle cx="60" cy="60" r="54" class="score-track"/>
+              <circle cx="60" cy="60" r="54" class="score-arc" id="score-arc" stroke-dasharray="339.3" stroke-dashoffset="339.3"/>
+            </svg>
+            <div class="score-inner">
+              <span class="score-pct" id="score-pct">0%</span>
+              <span class="score-sub" id="score-sub">dari soal MC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-breakdown" id="results-breakdown"></div>
+
+        <div id="wrong-review" class="wrong-review"></div>
+
+        <div class="essay-summary" id="essay-summary"></div>
+
+        <div class="results-actions">
+          <button class="btn-primary" id="res-retry">🔄 Ulangi Quiz</button>
+          <button class="btn-secondary" id="res-home">🏠 Kembali ke Home</button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /#app -->
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;width:100%;height:100%;"></canvas>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
