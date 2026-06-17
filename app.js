@@ -318,8 +318,10 @@ function updateTimerUI() {
   const el = $('mc-timer');
   el.textContent = state.timerLeft;
   const pct = (state.timerLeft / state.timerSec) * 100;
-  // Update conic-gradient
-  el.style.background = `conic-gradient(${pct > 30 ? '#7C3AED' : pct > 15 ? '#F59E0B' : '#EF4444'} ${pct}%, #1C2035 0)`;
+  const color = pct > 30 ? '#7C3AED' : pct > 15 ? '#F59E0B' : '#EF4444';
+  // Pakai box-shadow inset agar teks tidak tertutup
+  el.style.background = `conic-gradient(${color} ${pct}%, rgba(28,32,53,0.9) 0)`;
+  el.style.outlineColor = pct > 30 ? 'rgba(124,58,237,0.35)' : pct > 15 ? 'rgba(245,158,11,0.4)' : 'rgba(239,68,68,0.5)';
 }
 
 function autoAnswerWrong() {
